@@ -1,0 +1,27 @@
+{
+  "include": [
+    "src",
+    "jest.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".vscode"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDirs": [
+      "src"
+    ],
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "baseUrl": "src",
+  }
+}

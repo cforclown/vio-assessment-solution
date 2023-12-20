@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "chat-app"
+		},
+		{
+			"path": "chat-app.ui"
+		},
+		{
+			"path": "chat-app.contracts"
+		}
+	],
+	"settings": {}
+}
