@@ -10,7 +10,7 @@ class SIOController {
   static readonly INSTANCE_NAME = 'sioController';
 
   users: { [userId: string]: string, } = {};
-  sioService: SIOService;
+  public readonly sioService: SIOService;
 
   constructor (sioService: SIOService) {
     this.sioService = sioService;

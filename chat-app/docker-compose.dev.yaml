@@ -1,6 +1,7 @@
-name: "chap-app-dev"
+name: "chat-app-dev"
 services:
-  mongo:
+  chat-app-mongo:
+    container_name: 'chat-app-mongo'
     image: mongo
     restart: always
     ports:
@@ -12,7 +13,18 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
       MONGO_INITDB_DB: ${DB_NAME}
 
+  chat-app-rabbitmq:
+    container_name: 'chat-app-rabbitmq'
+    image: rabbitmq:3-management-alpine
+    ports:
+        - ${AMQP_PORT}:${AMQP_PORT}
+        - ${AMQP_UI_PORT}:${AMQP_UI_PORT}
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
   api:
+    container_name: 'chat-app-api'
     build:
       context: .
       dockerfile: Dockerfile.dev

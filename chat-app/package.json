@@ -19,6 +19,7 @@
   "author": "hafis alrizal",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "awilix": "^6.0.0",
     "axios": "^1.6.2",
     "cexpress-utils": "^1.6.3",
@@ -44,6 +45,7 @@
     "swagger-ui-express": "^4.2.0"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.4",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.12",
     "@types/crypto-js": "^4.0.2",

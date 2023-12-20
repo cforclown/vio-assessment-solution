@@ -16,6 +16,10 @@ DB_USERNAME=root
 DB_PASSWORD=root
 DB_NAME=chat-app
 
+AMQP_HOST=chat-app-rabbitmq
+AMQP_PORT=5672
+AMQP_UI_PORT=15672
+
 SESSION_SECRET=chat-app-session-secret # optional, default: session-secret
 
 ACCESS_TOKEN_SECRET=chat-app-access-token-secret

@@ -1,15 +1,13 @@
 
-import { AuthService, IUser, IUserContext, UsersService } from '../modules';
+import { AuthService, IUser, IUserContext } from '../modules';
 
 class SIOService {
   static readonly INSTANCE_NAME = 'sioService';
 
   private readonly authService: AuthService;
-  private readonly usersService: UsersService;
 
-  constructor (authService: AuthService, usersService: UsersService) {
+  constructor (authService: AuthService) {
     this.authService = authService;
-    this.usersService = usersService;
   }
 
   verifyAccessToken (accessToken: string): Promise<IUser> {

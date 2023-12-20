@@ -11,19 +11,7 @@ Simple chat app built using MERN stack.
 cp env-example .env
 ```
 
-or
-
-```bash
-cp env-example .env.dev
-```
-
-or for production
-
-```bash
-cp env-example-prod .env.prod
-```
-
-- adjust the .env file
+adjust `.env` values or leave it with default values
 
 ```bash
 npm install
@@ -44,6 +32,13 @@ npm run dev
 ### Dev environment
 
 ```bash
+cp env-example .env
+
+```
+
+adjust `.env` values or leave it with default values
+
+```bash
 docker compose -f docker-compose.dev.yaml up -d
 
 ```
@@ -51,6 +46,13 @@ docker compose -f docker-compose.dev.yaml up -d
 ### Prod environment
 
 ```bash
-docker compose up -d
+cp env-example-prod .env.prod
+
+```
+
+adjust `.env.prod` values or leave it with default values
+
+```bash
+docker compose --env-file ./.env.prod up -d
 
 ```

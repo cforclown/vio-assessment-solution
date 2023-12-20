@@ -6,13 +6,15 @@ import { IChannelRes, IUser } from '..';
 import { IO_INSTANCE_NAME } from '../../socketio';
 import SIOController from '../../socketio/sio.controller';
 import { HttpStatusCode } from 'axios';
+import { IAMQP } from 'amqp';
 
 export class MessagesController {
   public static readonly INSTANCE_NAME = 'messagesController';
 
   constructor (
     private readonly messagesService: MessagesService,
-    private readonly sioController: SIOController
+    private readonly sioController: SIOController,
+    private readonly amqp: IAMQP
   ) {
     this.getMsgs = this.getMsgs.bind(this);
     this.startConversation = this.startConversation.bind(this);
@@ -42,6 +44,10 @@ export class MessagesController {
 
     const io: Server | undefined | null = app.get(IO_INSTANCE_NAME);
     io?.to(payload.receiver).emit('on-message', dro.response(msg));
+    if (!this.sioController.users[payload.receiver]) { // we only send message to amqp when user is offline
+      // dont need to wait for the process
+      this.amqp.pushMsg(payload.receiver, msg).catch(err => Logger.exception(err));
+    }
 
     return channel;
   }
@@ -56,12 +62,16 @@ export class MessagesController {
     }
 
     const [channel, msg] = result;
-    const receiver = channel.users.find(u => u.toString() !== user.id);
-    if (!receiver) {
-      Logger.warn('Unexpected error occured. Send message receiver not found');
-    } else {
+    const receivers = channel.users.filter(u => u.toString() !== user.id);
+    if (receivers.length) {
       const io: Server | undefined | null = app.get(IO_INSTANCE_NAME);
-      io?.to(receiver.toString()).emit('on-message', dro.response(msg));
+      receivers.forEach(receiver => {
+        io?.to(receiver.toString()).emit('on-message', dro.response(msg));
+        if (!this.sioController.users[receiver.toString()]) { // we only send message to amqp when user is offline
+          // dont need to wait for the process
+          this.amqp.pushMsg(receiver.toString(), msg).catch(err => Logger.exception(err));
+        }
+      });
     }
 
     return msg;
