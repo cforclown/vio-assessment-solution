@@ -1,0 +1,61 @@
+name: "chat-app"
+services:
+  chat-app-api:
+    container_name: 'chat-app-api'
+    extends:
+      file: ./chat-app/docker-compose.dev.yaml
+      service: chat-app-api
+    environment:
+      PORT: ${PORT}
+      UI_ORIGIN: ${UI_ORIGIN}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      AMQP_HOST: ${AMQP_HOST}
+      AMQP_PORT: ${AMQP_PORT}
+      AMQP_UI_PORT: ${AMQP_UI_PORT}
+
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      ENCRYPTION_KEY: chat-app-encryption-key
+      SSL: false
+      API_VERSION: v1
+      SESSION_SECRET: chat-app-session-secret
+      ACCESS_TOKEN_SECRET: chat-app-access-token-secret
+      REFRESH_TOKEN_SECRET: chat-app-refresh-token-secret
+      ACCESS_TOKEN_EXP_IN: 9000000 # 15min
+
+  chat-app-ui:
+    container_name: 'chat-app-ui'
+    extends:
+      file: ./chat-app.ui/docker-compose.dev.yaml
+      service: chat-app-ui
+    environment:
+      VITE_REST_API_BASE_URL: http://localhost:${PORT}
+      VITE_REST_API_ROOT_PATH: api
+      VITE_REST_API_VERSION: v1
+
+  chat-app-mongo:
+    container_name: 'chat-app-mongo'
+    image: mongo
+    restart: always
+    ports:
+      - ${DB_PORT}:27017
+    volumes:
+      - ./.data/db:/var/lib/mongo/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DB: ${DB_NAME}
+
+  chat-app-rabbitmq:
+    container_name: 'chat-app-rabbitmq'
+    image: rabbitmq:3-management-alpine
+    ports:
+        - ${AMQP_PORT}:${AMQP_PORT}
+        - ${AMQP_UI_PORT}:${AMQP_UI_PORT}
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq

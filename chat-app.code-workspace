@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "chat-app.contracts"
+		},
+		{
+			"path": "chat-app.tf"
 		}
 	],
 	"settings": {}

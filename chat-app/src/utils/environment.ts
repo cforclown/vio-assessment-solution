@@ -11,9 +11,9 @@ export const Environment = {
     return false;
   },
   getPort: (): string => getEnvOrThrow('PORT'),
-  getAllowedOrigins: (): string[] => {
-    const appHost = getEnvOrThrow('ALLOWED_ORIGINS');
-    return appHost.split(',').filter(h => !!h);
+  getUIOrigin: (): string[] => {
+    const allowedOriginsRaw = getEnvOrThrow('UI_ORIGIN');
+    return allowedOriginsRaw.split(',').filter(h => !!h);
   },
   getApiVersion: (): string => getOptionalEnv('API_VERSION', 'v1'),
   getAmqpUrl: (): string => {

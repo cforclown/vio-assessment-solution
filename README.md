@@ -2,24 +2,16 @@
 
 ## Requirements
 
-- MongoDB
 - Node ^20
+- Npm ^10
+- Docker (mandatory for [Quick Start](#quick-start-docker))
+- MongoDB (Optional, for running on local machine. Ignore this if you use Docker)
+- RabbitMQ (Optional, for running on local machine. Ignore this if you use Docker)
 
-## Getting started (local development)
-
-### Frontend
+## Quick Start (Docker)
 
 - clone this repo
-- go to folder `frontend`
-- run `cp env-example .env`
-- adjust `.env` file (or leave it as it is)
-- run `npm install`
-- run `npm start`
-- open `localhost:3000` on your favorite browser
-
-### Backend
-
-- go to folder `backend`
-- run `cp env-example .env`
-- run `npm install`
-- run `npm start` to start the backend server or using vscode `Run and debug` and choose `debug-dev`
+- `cp env-example .env`
+- `docker compose -f docker-compose.dev.yaml up -d`
+- open [http://localhost:8080](http://localhost:8080) on your favorite browser
+- Enjoy!

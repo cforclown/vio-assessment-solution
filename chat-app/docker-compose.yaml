@@ -1,4 +1,4 @@
-name: "chat-app"
+name: "chat-app-api"
 services:
   chat-app-mongo:
     container_name: 'chat-app-mongo'
@@ -27,12 +27,15 @@ services:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 
-  api:
+  chat-app-api:
     container_name: 'chat-app-api'
+    env_file:
+      - ./.env.prod
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - ./.env.prod
     ports:
       - ${PORT}:${PORT}
+    depends_on:
+      - chat-app-mongo
+      - chat-app-rabbitmq

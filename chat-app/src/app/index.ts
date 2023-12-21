@@ -19,7 +19,7 @@ function App (authService: AuthService, mainRouter: Router): Express {
   app.use(express.urlencoded({ limit: '10mb', extended: false }));
   app.use(
     cors({
-      origin: Environment.getAllowedOrigins(),
+      origin: Environment.getUIOrigin(),
       credentials: true
     })
   );

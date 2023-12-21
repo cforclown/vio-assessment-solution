@@ -5,7 +5,7 @@ process.env.ENCRYPTION_KEY = 'ENCRYPTION_KEY';
 // --------------------------------------------
 
 process.env.PORT='55555';
-process.env.ALLOWED_ORIGINS='http://localhost:55556';
+process.env.UI_ORIGIN='http://localhost:55556';
 process.env.API_VERSION='v1';
 
 process.env.DB_HOST='mongo'

@@ -27,15 +27,15 @@ describe('environment', () => {
     });
   });
 
-  describe('Environment.getAllowedOrigins', () => {
+  describe('Environment.getUIOrigin', () => {
     it('should successfully return environment variable value', () => {
-      process.env.ALLOWED_ORIGINS = 'http://localhost,http://localhost:3000';
-      expect(Environment.getAllowedOrigins()).toEqual(['http://localhost', 'http://localhost:3000']);
+      process.env.UI_ORIGIN = 'http://localhost,http://localhost:3000';
+      expect(Environment.getUIOrigin()).toEqual(['http://localhost', 'http://localhost:3000']);
     });
 
     it('should return empty array when env not set', () => {
-      process.env.ALLOWED_ORIGINS = ''; // empty string is falsy
-      expect(Environment.getAllowedOrigins).toThrow(Error);
+      process.env.UI_ORIGIN = ''; // empty string is falsy
+      expect(Environment.getUIOrigin).toThrow(Error);
     });
   });
 

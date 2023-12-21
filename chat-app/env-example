@@ -6,11 +6,11 @@ ENCRYPTION_KEY=chat-app-encryption-secret
 
 SSL=false # optional, default: true, never set to true for local development. only for production and using SSL
 
-PORT=2999
-ALLOWED_ORIGINS=http://localhost:3000
+PORT=8090
+UI_ORIGIN=http://localhost:3000
 API_VERSION=v1 # optional, default: v1
 
-DB_HOST=mongo
+DB_HOST=chat-app-mongo
 DB_PORT=27017
 DB_USERNAME=root
 DB_PASSWORD=root
