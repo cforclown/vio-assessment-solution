@@ -21,3 +21,5 @@ SESSION_SECRET=chat-app-session-secret
 ACCESS_TOKEN_SECRET=chat-app-access-token-secret
 REFRESH_TOKEN_SECRET=chat-app-refresh-token-secret
 ACCESS_TOKEN_EXP_IN=9000000 # 15min
+
+UI_SERVE_PORT=8080

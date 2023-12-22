@@ -36,6 +36,7 @@ services:
       VITE_REST_API_BASE_URL: http://localhost:${PORT}
       VITE_REST_API_ROOT_PATH: api
       VITE_REST_API_VERSION: v1
+      VITE_SERVE_PORT: ${UI_SERVE_PORT}
 
   chat-app-mongo:
     container_name: 'chat-app-mongo'
