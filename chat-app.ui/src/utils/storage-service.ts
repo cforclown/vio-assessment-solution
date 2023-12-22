@@ -15,13 +15,17 @@ const storageService = (type: StorageType): IStorageService => {
     setObject: (key: string, value: any): void => {
       window[storageType].setItem(key, JSON.stringify(value));
     },
-    getObject: <T>(key: string): any => {
-      const value = window[storageType].getItem(key);
-      if (value) {
+    getObject: <T>(key: string): T | null => {
+      try {
+        const value = window[storageType].getItem(key);
+        if (!value) {
+          return null;
+        }
+
         return JSON.parse(value) as T;
+      } catch (err) {
+        return null;
       }
-      
-      return value;
     },
     remove: (key: string): void => {
       window[storageType].removeItem(key);

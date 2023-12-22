@@ -29,8 +29,8 @@ describe('environment', () => {
 
   describe('Environment.getUIOrigin', () => {
     it('should successfully return environment variable value', () => {
-      process.env.UI_ORIGIN = 'http://localhost,http://localhost:3000';
-      expect(Environment.getUIOrigin()).toEqual(['http://localhost', 'http://localhost:3000']);
+      process.env.UI_ORIGIN = 'http://localhost,http://localhost:8080';
+      expect(Environment.getUIOrigin()).toEqual(['http://localhost', 'http://localhost:8080']);
     });
 
     it('should return empty array when env not set', () => {
