@@ -16,7 +16,6 @@ NODE_ENV=dev
 LOG_LEVEL=debug
 ENCRYPTION_KEY=chat-app-encryption-key
 SSL=false
-UI_ORIGIN=http://localhost:8080
 API_VERSION=v1
 SESSION_SECRET=chat-app-session-secret
 ACCESS_TOKEN_SECRET=chat-app-access-token-secret

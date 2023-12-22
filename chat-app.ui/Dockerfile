@@ -19,12 +19,12 @@ ARG VITE_REST_API_BASE_URL
 ARG VITE_REST_API_ROOT_PATH
 ARG VITE_REST_API_VERSION
 ARG VITE_SERVE_PORT
-COPY .env.template .
+COPY env-template .
 RUN envsub\
     --env VITE_REST_API_BASE_URL=$VITE_REST_API_BASE_URL\
     --env VITE_REST_API_ROOT_PATH=$VITE_REST_API_ROOT_PATH\
     --env VITE_REST_API_VERSION=$VITE_REST_API_VERSION\
-    .env.template .env
+    env-template .env
 
 # Build the application
 RUN npm run build
