@@ -17,6 +17,7 @@ Simple chat app
   - 3 Layer architecture (controller, service, data-access-object)
   - Dependency injection (Awilix)
   - [cexpress-utils](https://github.com/cforclown/cexpress-utils)  - [npm](https://www.npmjs.com/package/cexpress-utils) ( i built this)
+  - Unit test coverage (API) ^80%
 - Swagger API Documentation
 - SocketIO
 - RabbitMQ
