@@ -28,6 +28,7 @@ Simple chat app
 
 - clone this repo
 - `cp env-example .env`
+- `cp chat-app.ui/env-example chat-app.ui/.env`
 - `docker compose -f docker-compose.dev.yaml up -d`
 - open [http://localhost:8080](http://localhost:8080) on your favorite browser
 - open [http://localhost:8090/api/v1/docs](http://localhost:8090/api/v1/docs) for API Documentation
@@ -37,8 +38,13 @@ Simple chat app
 
 - `cd chat-app`
 - `cp env-example .env`
+- adjust `.env` file or leave as it is
 - `docker compose -f docker-compose.dev.yaml up -d` or
+  To run API on local machine
   - `npm install`
+  - adjust `.env`
+    - change `DB_HOST` value to `localhost`
+    - change `AMQP_HOST` value to `localhost`
   - `npm start` to run it on local machine
 - open [http://localhost:8090/api/v1/docs](http://localhost:8090/api/v1/docs) for API Documentation
 - Enjoy!

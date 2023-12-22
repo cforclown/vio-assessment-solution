@@ -6,6 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 8080:8080
+      - ${VITE_SERVE_PORT}:${VITE_SERVE_PORT}
     environment:
-      VITE_SERVE_PORT: 8080
+      VITE_REST_API_BASE_URL: ${VITE_REST_API_BASE_URL}
+      VITE_REST_API_ROOT_PATH: ${VITE_REST_API_ROOT_PATH}
+      VITE_REST_API_VERSION: ${VITE_REST_API_VERSION}
+      VITE_SERVE_PORT: ${VITE_SERVE_PORT}
