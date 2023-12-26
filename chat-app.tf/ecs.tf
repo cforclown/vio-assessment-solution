@@ -5,8 +5,8 @@ resource "aws_ecs_cluster" "main" {
 }
 
 #metadata for the resource are defined here
-data "template_file" "myapp" {
-  template = file("./templates/ecs/myapp.json.tpl")
+data "template_file" "chat-app" {
+  template = file("./templates/ecs/chat-app.json.tpl")
 
   vars = {
     app_image      = var.app_image
@@ -19,19 +19,19 @@ data "template_file" "myapp" {
 
 #Task definition along with required details for the task
 resource "aws_ecs_task_definition" "app" {
-  family                   = "myapp-task"
+  family                   = "chat-app-task"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
-  container_definitions    = data.template_file.myapp.rendered
+  container_definitions    = data.template_file.chat-app.rendered
 }
 
 #Main task details are defined
 #We used FARGATE cluster because it is automatically managed by AWS
 resource "aws_ecs_service" "main" {
-  name            = "myapp-service"
+  name            = "chat-app-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = var.app_count
@@ -45,7 +45,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.app.id
-    container_name   = "myapp"
+    container_name   = "chat-app"
     container_port   = var.app_port
   }
 
