@@ -17,7 +17,7 @@ variable "az_count" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "cforclown/chat-app:tagname"
+  default     = "cforclown/simple-chat-app:tagname"
 }
 
 variable "app_port" {

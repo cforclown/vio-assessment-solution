@@ -36,9 +36,11 @@ function App() {
       });
       setUserContextAction(validateResult === true ? savedUserContext : validateResult);
     } catch (err) {
-      if (err instanceof Error) {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
+      // eslint-disable-next-line no-console
+      console.error(err);
+      const status = (err as any)?.status;
+      if (status && status > 400) {
+        return navigate('/auth/signin');
       }
     } finally {
       setLoading(false);
