@@ -1,0 +1,14 @@
+name: "vio-assessment-solution-ui-dev"
+services:
+  vio-assessment-solution-ui:
+    container_name: 'vio-assessment-solution-ui'
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        VITE_REST_API_BASE_URL: ${VITE_REST_API_BASE_URL}
+        VITE_REST_API_ROOT_PATH: ${VITE_REST_API_ROOT_PATH}
+        VITE_REST_API_VERSION: ${VITE_REST_API_VERSION}
+        SERVE_PORT: ${SERVE_PORT}
+    ports:
+      - ${SERVE_PORT}:${SERVE_PORT}

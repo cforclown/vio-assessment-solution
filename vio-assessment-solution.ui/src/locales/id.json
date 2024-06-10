@@ -1,0 +1,24 @@
+{
+  "translation": {
+    "common": {
+      "new": "Baru",
+      "Action": "Aksi",
+      "columns": "Kolom",
+      "pageSizeWithValue": "Ukuran halaman ({{value}})",
+      "clientPagination": "Client pagination",
+      "viewDetails": "Lihat detil",
+      "edit": "Ubah",
+      "delete": "Hapus",
+      "cancel": "Batal",
+      "confirm": "Konfirmasi",
+      "areYouSure": "Apakah Anda yakin?",
+      "deletedSuccessfully": "Berhasil dihapus",
+      "account": "Akun",
+      "profile": "Profil",
+      "settings": "Settings",
+      "logout": "Logout",
+      "findUSers": "Temukan user lain",
+      "typeYourMsgHere": "Ketik pesan anda disini"
+    }
+  }
+}

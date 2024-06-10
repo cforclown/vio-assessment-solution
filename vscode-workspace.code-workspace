@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "vio-assessment-solution.api"
+		},
+		{
+			"path": "vio-assessment-solution.ui"
+		},
+		{
+			"path": "vio-assessment-solution.contracts"
+		},
+		{
+			"path": "vio-assessment-solution.gcp.tf"
+		},
+		{
+			"path": "vio-assessment-solution.aws.tf"
+		}
+	],
+	"settings": {}
+}

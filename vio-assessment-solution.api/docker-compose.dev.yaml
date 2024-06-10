@@ -1,0 +1,35 @@
+name: "vio-assessment-solution-api-dev"
+services:
+  vio-assessment-solution-mongo:
+    container_name: 'vio-assessment-solution-mongo'
+    image: mongo
+    restart: always
+    ports:
+      - ${DB_PORT}:27017
+    volumes:
+      - ./.data/db:/var/lib/mongo/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DB: ${DB_NAME}
+
+  vio-assessment-solution-rabbitmq:
+    container_name: 'vio-assessment-solution-rabbitmq'
+    image: rabbitmq:3-management-alpine
+    ports:
+        - ${AMQP_PORT}:${AMQP_PORT}
+        - ${AMQP_UI_PORT}:${AMQP_UI_PORT}
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+  vio-assessment-solution-api:
+    container_name: 'vio-assessment-solution-api'
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - vio-assessment-solution-mongo
+      - vio-assessment-solution-rabbitmq
