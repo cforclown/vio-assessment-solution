@@ -23,7 +23,7 @@
     "awilix": "^6.0.0",
     "axios": "^1.6.2",
     "cexpress-utils": "^1.6.3",
-    "vio-assessment-solution.contracts": "1.0.0",
+    "vio-assessment-solution.contracts": "1.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",

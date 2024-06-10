@@ -6,7 +6,7 @@ export interface IService<CreatedBy = string | IUser> {
   name: string;
   repoUrl: string;
   desc?: string;
-  createdyBy: CreatedBy;
+  createdBy: CreatedBy;
   createdAt?: Date;
   updatedAt?: Date;
 }

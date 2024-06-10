@@ -1,9 +1,9 @@
 import {
-  IChangePasswordPayload,
+  IChangePasswordReq,
   ICreateUserPayload,
   IRegisterUserReq,
   IUpdateUserPayload
-} from '../modules';
+} from 'vio-assessment-solution.contracts';
 import { Types } from 'mongoose';
 
 const userId = new Types.ObjectId();
@@ -43,7 +43,7 @@ export const mockUpdateUserPayload: IUpdateUserPayload = {
   fullname: 'update-fullname'
 };
 
-export const mockChangePasswordPayload: IChangePasswordPayload = {
+export const mockChangePasswordPayload: IChangePasswordReq = {
   currentPassword: 'mock-password',
   newPassword: '1MockNewPassword!',
   confirmNewPassword: '1MockNewPassword!'

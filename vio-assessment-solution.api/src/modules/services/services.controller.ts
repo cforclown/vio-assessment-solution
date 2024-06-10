@@ -1,8 +1,8 @@
 import { BaseController } from 'cexpress-utils/lib';
-import { IServiceDoc } from 'vio-assessment-solution.contracts';
+import { IService } from 'vio-assessment-solution.contracts';
 import { ServicesService } from '.';
 
-export class ServicesController extends BaseController<IServiceDoc> {
+export class ServicesController extends BaseController<IService> {
   public static readonly INSTANCE_NAME = 'channelsController';
 
   private readonly channelsService: ServicesService;

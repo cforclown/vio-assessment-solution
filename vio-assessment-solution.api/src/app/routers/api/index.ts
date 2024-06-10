@@ -3,7 +3,7 @@ import { Environment } from '../../../utils';
 import {
   AUTH_BASE_API_PATH,
   authenticateRequest,
-  CHANNELS_BASE_API_PATH,
+  SERVICES_BASE_API_PATH,
   MESSAGES_BASE_API_PATH,
   USERS_BASE_API_PATH
 } from '../../../modules';
@@ -22,7 +22,7 @@ export function ApiRouter (
   ]));
   router.use(`/${AUTH_BASE_API_PATH}`, authRouter);
   router.use(`/${USERS_BASE_API_PATH}`, usersRouter);
-  router.use(`/${CHANNELS_BASE_API_PATH}`, channelsRouter);
+  router.use(`/${SERVICES_BASE_API_PATH}`, channelsRouter);
   router.use(`/${MESSAGES_BASE_API_PATH}`, messagesRouter);
 
   return router;

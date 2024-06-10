@@ -4,14 +4,10 @@ import {
   AuthController,
   AuthRouter,
   AuthService,
-  CHANNELS_ROUTER_INSTANCE_NAME,
-  ChannelsDao,
-  ChannelsRouter,
-  MESSAGES_ROUTER_INSTANCE_NAME,
-  MessagesController,
-  MessagesRouter,
-  MessagesService,
+  SERVICES_ROUTER_INSTANCE_NAME,
   ServicesController,
+  ServicesDao,
+  servicesRouter,
   ServicesService,
   USERS_ROUTER_INSTANCE_NAME,
   UsersController,
@@ -23,8 +19,6 @@ import App from './app';
 import Database from './database';
 import { MainRouter } from './app/routers';
 import { ApiRouter } from './app/routers/api';
-import SIOController from './socketio/sio.controller';
-import SIOService from './socketio/sio.service';
 import { AMQP, IAMQP } from './amqp';
 
 export const container = createContainer({
@@ -37,8 +31,6 @@ export function setup (): void {
     mainRouter: asFunction(MainRouter),
     apiRouter: asFunction(ApiRouter),
     [Database.INSTANCE_NAME]: asClass(Database),
-    [SIOController.INSTANCE_NAME]: asClass(SIOController).singleton(),
-    [SIOService.INSTANCE_NAME]: asClass(SIOService),
     amqp: asClass<IAMQP>(AMQP),
     [AUTH_ROUTER_INSTANCE_NAME]: asFunction(AuthRouter),
     [AuthController.INSTANCE_NAME]: asClass(AuthController),
@@ -47,12 +39,9 @@ export function setup (): void {
     [UsersController.INSTANCE_NAME]: asClass(UsersController),
     usersService: asClass(UsersService),
     usersDao: asClass(UsersDao),
-    [CHANNELS_ROUTER_INSTANCE_NAME]: asFunction(ChannelsRouter),
+    [SERVICES_ROUTER_INSTANCE_NAME]: asFunction(servicesRouter),
     [ServicesController.INSTANCE_NAME]: asClass(ServicesController),
-    channelsService: asClass(ServicesService),
-    channelsDao: asClass(ChannelsDao),
-    [MESSAGES_ROUTER_INSTANCE_NAME]: asFunction(MessagesRouter),
-    [MessagesController.INSTANCE_NAME]: asClass(MessagesController),
-    [MessagesService.INSTANCE_NAME]: asClass(MessagesService)
+    [ServicesService.INSTANCE_NAME]: asClass(ServicesService),
+    servicesDao: asClass(ServicesDao)
   });
 }

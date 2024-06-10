@@ -4,7 +4,7 @@ import { HttpStatusCode } from 'axios';
 import { RestApiException } from 'cexpress-utils/lib';
 import { container, setup } from '../../di-config';
 import { Environment } from '../../utils';
-import { mockChannelDm1, mockChannelGroup, mockCreateGroupPayload, mockUpdateGroupPayload, mockUser } from '../../test';
+import { mockChannelDm1, mockChannelGroup, mockCreateServicePayload, mockUpdateServicePayload, mockUser } from '../../test';
 
 const mockJWTVerify = jest.fn();
 jest.mock('jsonwebtoken', () => ({
@@ -117,7 +117,7 @@ describe('channels-router', () => {
       const response = await request(app)
         .post(`/api/${Environment.getApiVersion()}/channels/group`)
         .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateGroupPayload)
+        .send(mockCreateServicePayload)
         .expect(HttpStatusCode.Ok);
       expect(response).toHaveProperty('text');
       const body = JSON.parse(response.text);
@@ -133,7 +133,7 @@ describe('channels-router', () => {
       const response = await request(app)
         .post(`/api/${Environment.getApiVersion()}/channels/group`)
         .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateGroupPayload)
+        .send(mockCreateServicePayload)
         .expect(HttpStatusCode.BadRequest);
       expect(response).toHaveProperty('text');
       expect(mockUsersServiceGet).toHaveBeenCalled();
@@ -146,7 +146,7 @@ describe('channels-router', () => {
       await request(app)
         .post(`/api/${Environment.getApiVersion()}/channels/group`)
         .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateGroupPayload)
+        .send(mockCreateServicePayload)
         .expect(HttpStatusCode.InternalServerError);
       expect(mockUsersServiceGet).toHaveBeenCalled();
       expect(mockChannelsDaoCreateChannel).toHaveBeenCalled();
@@ -157,7 +157,7 @@ describe('channels-router', () => {
     it('should successfully update channel', async () => {
       const response = await request(app)
         .patch(`/api/${Environment.getApiVersion()}/channels/group/${mockChannelGroup.id}`)
-        .send(mockUpdateGroupPayload)
+        .send(mockUpdateServicePayload)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.Ok);
       expect(response).toHaveProperty('text');
@@ -185,7 +185,7 @@ describe('channels-router', () => {
 
       await request(app)
         .patch(`/api/${Environment.getApiVersion()}/channels/group/${mockChannelDm1.id}`)
-        .send(mockUpdateGroupPayload)
+        .send(mockUpdateServicePayload)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.NotFound);
     });

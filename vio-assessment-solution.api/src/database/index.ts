@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { Environment } from '../utils';
 import {
-  CHANNELS_COLLECTION_NAME,
-  channelsSchema,
+  SERVICES_COLLECTION_NAME,
+  servicesModelSchema,
   USERS_COLLECTION_NAME,
   usersSchema
 } from '../modules';
@@ -29,7 +29,7 @@ class Database {
 
   registerModels (): void {
     mongoose.model(USERS_COLLECTION_NAME, usersSchema);
-    mongoose.model(CHANNELS_COLLECTION_NAME, channelsSchema);
+    mongoose.model(SERVICES_COLLECTION_NAME, servicesModelSchema);
   }
 }
 

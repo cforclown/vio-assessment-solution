@@ -1,15 +1,15 @@
 import { BaseService } from 'cexpress-utils/lib';
-import { IServiceDoc } from 'vio-assessment-solution.contracts';
+import { IService } from 'vio-assessment-solution.contracts';
 import { UsersService } from '..';
-import { ChannelsDao } from '.';
+import { ServicesDao } from '.';
 
-export class ServicesService extends BaseService<IServiceDoc> {
+export class ServicesService extends BaseService<IService> {
   public static readonly INSTANCE_NAME = 'servicesService';
 
-  constructor (private readonly channelsDao: ChannelsDao, private readonly usersService: UsersService) {
-    super(channelsDao);
+  constructor (private readonly servicesDao: ServicesDao, private readonly usersService: UsersService) {
+    super(servicesDao);
 
-    this.channelsDao = channelsDao;
+    this.servicesDao = servicesDao;
     this.usersService = usersService;
   }
 }

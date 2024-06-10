@@ -1,21 +1,21 @@
 import { Router } from 'express';
 import { RequestHandler, validateBody, validateParams } from 'cexpress-utils/lib';
-import { createGroupReqSchema, updateGroupReqSchema } from 'vio-assessment-solution.contracts';
+import { createServiceReqSchema, updateServiceReqSchema } from 'vio-assessment-solution.contracts';
 import { ServicesController } from '..';
 import { idSchema } from '../../schemas';
 
-export const CHANNELS_ROUTER_INSTANCE_NAME = 'channelsRouter';
-export const CHANNELS_BASE_API_PATH = 'channels';
+export const SERVICES_ROUTER_INSTANCE_NAME = 'servicesRouter';
+export const SERVICES_BASE_API_PATH = 'services';
 
-export function ChannelsRouter (channelsController: ServicesController): Router {
+export function servicesRouter (servicesController: ServicesController): Router {
   const router = Router();
 
   /**
    * @swagger
-   * /api/v1/channels/{id}:
+   * /api/v1/services/{id}:
    *      get:
    *          tags:
-   *              - Channels
+   *              - Services
    *          description: Get channel details
    *          security:
    *              - Bearer: []
@@ -28,73 +28,59 @@ export function ChannelsRouter (channelsController: ServicesController): Router 
    *                  description: Channel id
    *                  required: true
    */
-  router.get('/:id', validateParams(idSchema), RequestHandler(channelsController.get));
+  router.get('/:id', validateParams(idSchema), RequestHandler(servicesController.get));
 
   /**
    * @swagger
-   * /api/v1/channels:
+   * /api/v1/services:
    *      get:
    *          tags:
-   *              - Channels
-   *          description: Get all user channels
+   *              - Services
+   *          description: Get all services
    *          security:
    *              - Bearer: []
    *          responses:
    *              '200':
    *                  description: OK
    */
-  router.get('/', RequestHandler(channelsController.getUserChannels));
+  router.get('/', RequestHandler(servicesController.getAll));
 
   /**
    * @swagger
-   * /api/v1/channels/group:
+   * /api/v1/services:
    *      post:
    *          tags:
-   *              - Channels
-   *          description: Create group
+   *              - Services
+   *          description: Create service
    *          security:
    *              - Bearer: []
    *          responses:
    *              '200':
    *                  description: OK
-   *          requestBody:
-   *              description: "Create group"
-   *              required: true
-   *              content:
-   *                  application/json:
-   *                      schema:
-   *                          $ref: '#/components/schemas/createGroup'
    */
-  router.post('/group', validateBody(createGroupReqSchema), RequestHandler(channelsController.createGroup));
+  router.get('/', validateBody(createServiceReqSchema), RequestHandler(servicesController.create));
 
   /**
    * @swagger
-   * /api/v1/channels/group{id}:
-   *      patch:
+   * /api/v1/services:
+   *      put:
    *          tags:
-   *              - Channels
-   *          description: Update group
+   *              - Services
+   *          description: Update service
    *          security:
    *              - Bearer: []
    *          responses:
    *              '200':
    *                  description: OK
-   *          requestBody:
-   *              description: "Update group payload"
-   *              required: true
-   *              content:
-   *                  application/json:
-   *                      schema:
-   *                          $ref: '#/components/schemas/upgradeGroup'
    */
-  router.patch('/group/:id', validateParams(idSchema), validateBody(updateGroupReqSchema), RequestHandler(channelsController.updateGroup));
+  router.put('/', validateBody(updateServiceReqSchema), RequestHandler(servicesController.update));
 
   /**
    * @swagger
-   * /api/v1/channels/{id}:
+   * /api/v1/services/{id}:
    *      delete:
    *          tags:
-   *              - Channels
+   *              - Services
    *          description: Delete channel
    *          security:
    *              - Bearer: []
@@ -106,7 +92,7 @@ export function ChannelsRouter (channelsController: ServicesController): Router 
    *                  in: path
    *                  required: true
    */
-  router.delete('/:id', validateParams(idSchema), RequestHandler(channelsController.delete));
+  router.delete('/:id', validateParams(idSchema), RequestHandler(servicesController.delete));
 
   return router;
 }

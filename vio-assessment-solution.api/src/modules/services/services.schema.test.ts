@@ -1,22 +1,22 @@
 import { validateSchema, ValidationException } from 'cexpress-utils/lib';
 import { createGroupReqSchema, updateGroupReqSchema } from '.';
-import { mockCreateGroupPayload, mockUpdateGroupPayload } from '../../test';
+import { mockCreateServicePayload, mockUpdateServicePayload } from '../../test';
 
 describe('channels.schema', () => {
   describe('createGroupReqSchema', () => {
     it('should return value when schema is valid', () => {
       const result = validateSchema({
         schema: createGroupReqSchema,
-        payload: mockCreateGroupPayload
+        payload: mockCreateServicePayload
       });
-      expect(result).toEqual(mockCreateGroupPayload);
+      expect(result).toEqual(mockCreateServicePayload);
     });
 
     it('should throw validation exception when required field not provided', () => {
       expect(() => validateSchema({
         schema: createGroupReqSchema,
         payload: {
-          ...mockCreateGroupPayload,
+          ...mockCreateServicePayload,
           name: undefined
         }
       })).toThrow(ValidationException);
@@ -27,8 +27,8 @@ describe('channels.schema', () => {
     it('should return value when schema is valid', () => {
       expect(validateSchema({
         schema: updateGroupReqSchema,
-        payload: mockUpdateGroupPayload
-      })).toEqual(mockUpdateGroupPayload);
+        payload: mockUpdateServicePayload
+      })).toEqual(mockUpdateServicePayload);
 
       expect(validateSchema({
         schema: updateGroupReqSchema,

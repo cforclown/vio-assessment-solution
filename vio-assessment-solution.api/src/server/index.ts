@@ -1,10 +1,8 @@
 import { Express } from 'express';
-import { asValue } from 'awilix';
 import { Logger } from 'cexpress-utils/lib';
 import Database from '../database';
 import { container } from '../di-config';
 import { Environment } from '../utils';
-import initSocketIO, { IO_INSTANCE_NAME } from '../socketio';
 import SIOController from '../socketio/sio.controller';
 import { IAMQP } from '../amqp';
 
@@ -34,13 +32,8 @@ export default class Server {
       Logger.success('| ✅ SUCCESSFULLY CONNECTED TO THE AMQP');
 
       const port = Environment.getPort();
-      const server = await this.app.listen(port);
+      await this.app.listen(port);
       Logger.success(`| ⚡ SERVER STARTED SUCCESSFULLY [${port}]`);
-
-      const sio = initSocketIO(server, this.sioController);
-      this.app.set(IO_INSTANCE_NAME, sio);
-      container.register(IO_INSTANCE_NAME, asValue(sio));
-      Logger.success('| ⚡️ SOCKET.IO STARTED SUCCESSFULLY');
       Logger.success('============================================================================');
     } catch (err: any) {
       Logger.exception(err);

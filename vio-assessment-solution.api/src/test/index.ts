@@ -1,6 +1,6 @@
 import { IExplorationReq } from 'cexpress-utils/lib';
 
-export * from './mock-channels-data';
+export * from './mock-services-data';
 export * from './mock-db';
 export * from './mock-mongoose-model';
 export * from './mock-users-data';
