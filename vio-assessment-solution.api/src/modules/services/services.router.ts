@@ -16,7 +16,7 @@ export function servicesRouter (servicesController: ServicesController): Router 
    *      get:
    *          tags:
    *              - Services
-   *          description: Get channel details
+   *          description: Get service details
    *          security:
    *              - Bearer: []
    *          responses:
@@ -25,7 +25,7 @@ export function servicesRouter (servicesController: ServicesController): Router 
    *          parameters:
    *              -   name: id
    *                  in: path
-   *                  description: Channel id
+   *                  description: Service id
    *                  required: true
    */
   router.get('/:id', validateParams(idSchema), RequestHandler(servicesController.get));
@@ -57,8 +57,15 @@ export function servicesRouter (servicesController: ServicesController): Router 
    *          responses:
    *              '200':
    *                  description: OK
+   *          requestBody:
+   *              description: "Create service payload"
+   *              required: true
+   *              content:
+   *                  application/json:
+   *                      schema:
+   *                          $ref: '#/components/schemas/createService'
    */
-  router.get('/', validateBody(createServiceReqSchema), RequestHandler(servicesController.create));
+  router.post('/', validateBody(createServiceReqSchema), RequestHandler(servicesController.create));
 
   /**
    * @swagger
@@ -72,8 +79,55 @@ export function servicesRouter (servicesController: ServicesController): Router 
    *          responses:
    *              '200':
    *                  description: OK
+   *          requestBody:
+   *              description: "Create service payload"
+   *              required: true
+   *              content:
+   *                  application/json:
+   *                      schema:
+   *                          $ref: '#/components/schemas/updateService'
    */
   router.put('/', validateBody(updateServiceReqSchema), RequestHandler(servicesController.update));
+
+  /**
+   * @swagger
+   * /api/v1/services/{id}/start:
+   *      put:
+   *          tags:
+   *              - Services
+   *          description: Start service
+   *          security:
+   *              - Bearer: []
+   *          responses:
+   *              '200':
+   *                  description: OK
+   *          parameters:
+   *              -   name: id
+   *                  in: path
+   *                  description: Service id
+   *                  required: true
+   */
+  router.put('/:id/start', validateParams(idSchema), RequestHandler(servicesController.start));
+
+  /**
+   * @swagger
+   * /api/v1/services/{id}/stop:
+   *      put:
+   *          tags:
+   *              - Services
+   *          description: Stop service
+   *          security:
+   *              - Bearer: []
+   *          responses:
+   *              '200':
+   *                  description: OK
+   *          parameters:
+   *              -   name: id
+   *                  in: path
+   *                  description: Service id
+   *                  required: true
+   */
+  router.put('/:id/stop', validateParams(idSchema), RequestHandler(servicesController.stop));
 
   /**
    * @swagger
@@ -81,7 +135,7 @@ export function servicesRouter (servicesController: ServicesController): Router 
    *      delete:
    *          tags:
    *              - Services
-   *          description: Delete channel
+   *          description: Delete service
    *          security:
    *              - Bearer: []
    *          responses:

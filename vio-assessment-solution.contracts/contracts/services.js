@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.servicesSwagger = exports.updateServiceReqSchema = exports.createServiceReqSchema = void 0;
+exports.servicesSwagger = exports.updateServiceReqSchema = exports.createServiceReqSchema = exports.serviceStatuses = void 0;
 const joi_1 = __importDefault(require("joi"));
+exports.serviceStatuses = ['building', 'running', 'stopped', 'pending', 'error'];
 exports.createServiceReqSchema = joi_1.default.object({
     name: joi_1.default.string().required(),
     repoUrl: joi_1.default.string().uri().required(),

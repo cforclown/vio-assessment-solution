@@ -1,9 +1,14 @@
 import Joi from 'joi';
 import { IUser } from './users';
+export declare const serviceStatuses: readonly ["building", "running", "stopped", "pending", "error"];
+export type ServiceStatus = typeof serviceStatuses[number];
 export interface IService<CreatedBy = string | IUser> {
     id: string;
     name: string;
     repoUrl: string;
+    status: ServiceStatus;
+    containerId?: string;
+    url?: string;
     desc?: string;
     createdBy: CreatedBy;
     createdAt?: Date;

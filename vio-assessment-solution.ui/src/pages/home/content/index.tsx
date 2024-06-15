@@ -7,8 +7,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Welcome =  React.lazy(() => import('../pages/welcome'));
-const Channels =  React.lazy(() => import('../pages/channels'));
-const FindUsers =  React.lazy(() => import('../pages/find-users'));
+const Services =  React.lazy(() => import('../pages/services'));
 
 const Container = styled.div<ILayoutState>`
   position: relative;
@@ -26,8 +25,7 @@ function Content(): JSX.Element {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route key="welcome" path="/" element={<Welcome />} />
-          <Route key="find-users" path="find-users" element={<FindUsers />} />
-          <Route key="channels" path="channels/*" element={<Channels />} />
+          <Route key="services" path="services/*" element={<Services />} />
           <Route key="*" path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Suspense>

@@ -16,12 +16,6 @@ export const Environment = {
     return allowedOriginsRaw.split(',').filter(h => !!h);
   },
   getApiVersion: (): string => getOptionalEnv('API_VERSION', 'v1'),
-  getAmqpUrl: (): string => {
-    const host = getEnvOrThrow('AMQP_HOST');
-    const port = getOptionalEnv('AMQP_PORT', undefined);
-
-    return `amqp://${host}${port ? `:${port}` : ''}`;
-  },
 
   getDBConnectionString: (): string => {
     const dbHost = getEnvOrThrow('DB_HOST');

@@ -16,10 +16,6 @@ DB_USERNAME=root
 DB_PASSWORD=root
 DB_NAME=vio-assessment-solution
 
-AMQP_HOST=vio-assessment-solution-rabbitmq
-AMQP_PORT=5672
-AMQP_UI_PORT=15672
-
 SESSION_SECRET=vio-assessment-solution-session-secret # optional, default: session-secret
 
 ACCESS_TOKEN_SECRET=vio-assessment-solution-access-token-secret

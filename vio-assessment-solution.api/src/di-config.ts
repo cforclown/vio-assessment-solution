@@ -19,7 +19,6 @@ import App from './app';
 import Database from './database';
 import { MainRouter } from './app/routers';
 import { ApiRouter } from './app/routers/api';
-import { AMQP, IAMQP } from './amqp';
 
 export const container = createContainer({
   injectionMode: InjectionMode.CLASSIC
@@ -31,7 +30,6 @@ export function setup (): void {
     mainRouter: asFunction(MainRouter),
     apiRouter: asFunction(ApiRouter),
     [Database.INSTANCE_NAME]: asClass(Database),
-    amqp: asClass<IAMQP>(AMQP),
     [AUTH_ROUTER_INSTANCE_NAME]: asFunction(AuthRouter),
     [AuthController.INSTANCE_NAME]: asClass(AuthController),
     [AuthService.INSTANCE_NAME]: asClass(AuthService),
@@ -40,8 +38,8 @@ export function setup (): void {
     usersService: asClass(UsersService),
     usersDao: asClass(UsersDao),
     [SERVICES_ROUTER_INSTANCE_NAME]: asFunction(servicesRouter),
-    [ServicesController.INSTANCE_NAME]: asClass(ServicesController),
-    [ServicesService.INSTANCE_NAME]: asClass(ServicesService),
+    servicesController: asClass(ServicesController),
+    servicesService: asClass(ServicesService),
     servicesDao: asClass(ServicesDao)
   });
 }

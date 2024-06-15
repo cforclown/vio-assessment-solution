@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
-import { mergeDeepRight, omit } from 'ramda';
+import { mergeDeepRight } from 'ramda';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import DataTable from '@/components/data-table';
 import callApiWrapper from '@/components/wrappers/CallApiWrapper';
@@ -64,7 +64,7 @@ function Exploration<T>({
     } else {
       const response = await apiPaginationGetDataFunc({
         ...payload,
-        pagination: omit(['pageCount'], payload.pagination)
+        pagination: payload.pagination
       });
       
       setExploration(response);

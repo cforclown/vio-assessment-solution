@@ -4,15 +4,13 @@ import {
   AUTH_BASE_API_PATH,
   authenticateRequest,
   SERVICES_BASE_API_PATH,
-  MESSAGES_BASE_API_PATH,
   USERS_BASE_API_PATH
 } from '../../../modules';
 
 export function ApiRouter (
   authRouter: Router,
   usersRouter: Router,
-  channelsRouter: Router,
-  messagesRouter: Router
+  servicesRouter: Router
 ): Router {
   const router = Router();
   const apiVersion = Environment.getApiVersion();
@@ -22,8 +20,7 @@ export function ApiRouter (
   ]));
   router.use(`/${AUTH_BASE_API_PATH}`, authRouter);
   router.use(`/${USERS_BASE_API_PATH}`, usersRouter);
-  router.use(`/${SERVICES_BASE_API_PATH}`, channelsRouter);
-  router.use(`/${MESSAGES_BASE_API_PATH}`, messagesRouter);
+  router.use(`/${SERVICES_BASE_API_PATH}`, servicesRouter);
 
   return router;
 }

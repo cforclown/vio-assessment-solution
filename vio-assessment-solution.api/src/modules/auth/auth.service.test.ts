@@ -1,5 +1,6 @@
 import { RestApiException } from 'cexpress-utils/lib';
-import { AuthService, IUserContext } from '.';
+import { IUserContext } from 'vio-assessment-solution.contracts';
+import { AuthService } from '.';
 import { mockRegisterUserPayload, mockUser as mockUserData } from '../../test/mock-users-data';
 import { container, setup } from '../../di-config';
 

@@ -6,16 +6,19 @@ const mockId = new Types.ObjectId();
 
 export const mockServiceData: IService = {
   id: mockId.toString(),
-  name: 'channel name',
+  name: 'service name',
   repoUrl: 'https://test.com/repo-name',
-  desc: 'mock channel desc',
+  status: 'pending',
+  containerId: 'mock container id',
+  url: 'https://test.com/url',
+  desc: 'mock service desc',
   createdBy: mockUser.id
 };
 
 export const mockCreateServicePayload: ICreateServiceReq = {
-  name: 'channel name',
+  name: 'service name',
   repoUrl: 'https://test.com/repo-name',
-  desc: 'mock channel desc'
+  desc: 'mock service desc'
 };
 
 export const mockUpdateServicePayload: IUpdateServiceReq = {

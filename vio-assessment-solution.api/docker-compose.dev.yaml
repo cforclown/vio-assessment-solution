@@ -13,16 +13,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
       MONGO_INITDB_DB: ${DB_NAME}
 
-  vio-assessment-solution-rabbitmq:
-    container_name: 'vio-assessment-solution-rabbitmq'
-    image: rabbitmq:3-management-alpine
-    ports:
-        - ${AMQP_PORT}:${AMQP_PORT}
-        - ${AMQP_UI_PORT}:${AMQP_UI_PORT}
-    volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-
   vio-assessment-solution-api:
     container_name: 'vio-assessment-solution-api'
     build:
@@ -30,6 +20,5 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - ${PORT}:${PORT}
-    depends_on:
-      - vio-assessment-solution-mongo
-      - vio-assessment-solution-rabbitmq
+    # depends_on:
+    #   - vio-assessment-solution-mongo

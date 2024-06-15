@@ -10,7 +10,10 @@ function SidebarHeader({ collapsed, userContext: { user } }: ISidebarHeaderProps
   return (
     <div className="w-full h-[68px] bg-[#FFFFFF22] flex flex-row justify-center items-center gap-2">
       <div className="cursor-pointer">
-        <UserAvatar src={user.avatar} size="lg" />
+        <UserAvatar 
+          // src={user.avatar} 
+          size="lg" 
+        />
       </div>
       {!collapsed && (
         <div className="flex flex-col justify-center items-start">

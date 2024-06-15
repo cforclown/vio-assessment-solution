@@ -41,7 +41,7 @@ function DynamicFormFieldItemInput({
 }: IDynamicFormFieldItemInput): JSX.Element | null {
   if (
     rawField.type.value === 'ID'
-    || (rawField.type.noneditable === 'hide' && isEditing)
+    || (rawField.type.noneditable === 'hide')
     || (rawField.type.noneditable === 'static' && isEditing)
   ) {
     return null;

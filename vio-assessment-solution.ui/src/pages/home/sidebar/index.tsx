@@ -1,15 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Sidebar as ReactProSidebar } from 'react-pro-sidebar';
 import { selectTheme } from '@/store/reducers/layout/theme-selectors';
 import SidebarHeader from './sidebar-header';
-import { IUser } from 'vio-assessment-solution.contracts';
 import withUserContext, { IWithUserContext } from '@/components/HOC/withUserContext';
-import { selectChannels } from '@/store/reducers/channels/channels-selectors';
 import SidebarFooter from './sidebar-footer';
-import SidebarContentChannels from './sidebar-content/sidebar-content-channels';
-import { IChannel } from '@/store/reducers/channels';
+import SidebarBody from './sidebar-body';
 
 export interface ISidebar extends IWithUserContext {
   collapsed: boolean;
@@ -24,21 +20,8 @@ const Container = styled(ReactProSidebar)`
   box-shadow: 1px 3px 6px #00000040;
 `;
 
-function Sidebar({ userContext: { user }, collapsed, onBreakpoint, onBackdropClick, hidden }: ISidebar): JSX.Element {
+function Sidebar({ collapsed, onBreakpoint, onBackdropClick, hidden }: ISidebar): JSX.Element {
   const theme = useSelector(selectTheme());
-  const ismounted = useRef(false);
-  const channels = useSelector(selectChannels());
-  const normalizedChannels: (IChannel & { withUser?: IUser })[] = useMemo(() => channels.map(channel => ({
-    ...channel,
-    withUser: channel.type === 'dm' ? channel.users.find(u => u.id !== user.id) : undefined
-  })), [channels]);
-
-  useEffect(() => {
-    ismounted.current = true;
-    return () => {
-      ismounted.current = false;
-    };
-  }, []);
 
   return (
     <Container 
@@ -52,7 +35,7 @@ function Sidebar({ userContext: { user }, collapsed, onBreakpoint, onBackdropCli
     >
       <div className="h-screen flex flex-col justify-start items-start">
         <SidebarHeader collapsed={collapsed} />
-        <SidebarContentChannels channels={normalizedChannels} />
+        <SidebarBody />
         <SidebarFooter />
       </div>
     </Container>

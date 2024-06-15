@@ -5,7 +5,7 @@ import Loader from '@/components/loader/Loader.style';
 const SignIn = lazy(() => import('./sign-in'));
 const SignUp = lazy(() => import('./sign-up'));
 
-export default function Auth(): JSX.Element {
+function Auth(): JSX.Element {
   return (
     <div className="w-screen h-screen overflow-hidden bg-primary text-primary-foreground flex justify-center items-center m-0 p-0">
       <Suspense fallback={<Loader />}>
@@ -18,3 +18,5 @@ export default function Auth(): JSX.Element {
     </div>
   );
 }
+
+export default Auth;

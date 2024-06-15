@@ -96,7 +96,7 @@ export function generateFormFields(
   form: UseFormReturn<any, any, undefined>,
   fields: IMetadataField<any>[]
 ): any {
-  return fields.filter(f => f.accessorKey).map((field) => (
+  return fields.filter(f => f.accessorKey && f.type.noneditable !== 'hide').map((field) => (
     <DynamicFormField key={field.accessorKey} form={form} field={field} />
   ));
 }
@@ -198,7 +198,7 @@ export function generateFormSchema<T>(
   fields: IMetadataField<T>[],
   isEditing?: boolean
 ): any {
-  return zod.object(fields.filter(f => f.accessorKey).reduce((acc: Record<string, any>, curr) => {
+  return zod.object(fields.filter(f => f.accessorKey && f.type.noneditable !== 'hide').reduce((acc: Record<string, any>, curr) => {
     acc[curr.accessorKey as string] = getFieldSchema(curr, isEditing);
     return acc;
   }, {}));
@@ -208,7 +208,7 @@ export function generateFormYupSchema<T>(
   fields: IMetadataField<T>[],
   isEditing?: boolean
 ): any {
-  return zod.object(fields.filter(f => f.accessorKey).reduce((acc: Record<string, any>, curr) => {
+  return zod.object(fields.filter(f => f.accessorKey && f.type.noneditable !== 'hide').reduce((acc: Record<string, any>, curr) => {
     acc[curr.accessorKey as string] = getFieldYupSchema(curr, isEditing);
     return acc;
   }, {}));

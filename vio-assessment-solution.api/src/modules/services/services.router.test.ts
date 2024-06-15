@@ -4,7 +4,7 @@ import { HttpStatusCode } from 'axios';
 import { RestApiException } from 'cexpress-utils/lib';
 import { container, setup } from '../../di-config';
 import { Environment } from '../../utils';
-import { mockChannelDm1, mockChannelGroup, mockCreateServicePayload, mockUpdateServicePayload, mockUser } from '../../test';
+import { mockServiceData, mockUser } from '../../test';
 
 const mockJWTVerify = jest.fn();
 jest.mock('jsonwebtoken', () => ({
@@ -18,20 +18,16 @@ jest.mock('mongoose', () => ({
   model: jest.fn().mockImplementation((collection: string): string => mockModel(collection))
 }));
 
-const mockChannelsDaoGet = jest.fn();
-const mockChannelsDaoGetUserChannels = jest.fn();
-const mockChannelsDaoCreateChannel = jest.fn();
-const mockChannelsDaoCreate = jest.fn();
-const mockChannelsDaoUpdate = jest.fn();
-const mockChannelsDaoDelete = jest.fn();
-jest.mock('./channels.dao', () => ({
-  ChannelsDao: jest.fn().mockImplementation(() => ({
-    get: (payload: any): void => mockChannelsDaoGet(payload),
-    getUserChannels: (payload: any): void => mockChannelsDaoGetUserChannels(payload),
-    createChannel: (payload: any): void => mockChannelsDaoCreateChannel(payload),
-    create: (payload: any): void => mockChannelsDaoCreate(payload),
-    update: (payload: any): void => mockChannelsDaoUpdate(payload),
-    delete: (payload: any): void => mockChannelsDaoDelete(payload)
+const mockServicesDaoGet = jest.fn();
+const mockServicesDaoCreate = jest.fn();
+const mockServicesDaoUpdate = jest.fn();
+const mockServicesDaoDelete = jest.fn();
+jest.mock('./services.dao', () => ({
+  ServicesDao: jest.fn().mockImplementation(() => ({
+    get: (payload: any): void => mockServicesDaoGet(payload),
+    create: (payload: any): void => mockServicesDaoCreate(payload),
+    update: (payload: any): void => mockServicesDaoUpdate(payload),
+    delete: (payload: any): void => mockServicesDaoDelete(payload)
   }))
 }));
 
@@ -42,14 +38,12 @@ jest.mock('../users/users.service', () => ({
   }))
 }));
 
-describe('channels-router', () => {
+describe('services-router', () => {
   mockUsersServiceGet.mockResolvedValue(mockUser);
-  mockChannelsDaoGet.mockResolvedValue(mockChannelDm1);
-  mockChannelsDaoGetUserChannels.mockResolvedValue([mockChannelDm1]);
-  mockChannelsDaoCreateChannel.mockResolvedValue(mockChannelGroup);
-  mockChannelsDaoCreate.mockResolvedValue(mockChannelDm1);
-  mockChannelsDaoUpdate.mockResolvedValue(mockChannelDm1);
-  mockChannelsDaoDelete.mockImplementation((payload) => Promise.resolve(payload));
+  mockServicesDaoGet.mockResolvedValue(mockServiceData);
+  mockServicesDaoCreate.mockResolvedValue(mockServiceData);
+  mockServicesDaoUpdate.mockResolvedValue(mockServiceData);
+  mockServicesDaoDelete.mockResolvedValue(mockServiceData);
 
   mockJWTVerify.mockReturnValue(mockUser);
 
@@ -65,148 +59,43 @@ describe('channels-router', () => {
   });
 
   describe('get', () => {
-    it('should successfully return channel', async () => {
+    it('should successfully return service', async () => {
       const response = await request(app)
-        .get(`/api/${Environment.getApiVersion()}/channels/${mockChannelDm1.id}`)
+        .get(`/api/${Environment.getApiVersion()}/services/${mockServiceData.id}`)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.Ok);
 
       expect(response).toHaveProperty('text');
       const body = JSON.parse(response.text);
       expect(body).toHaveProperty('data');
-      expect(body.data).toEqual(mockChannelDm1);
+      expect(body.data).toEqual(mockServiceData);
     });
 
-    it('should return 404 when channel not found', async () => {
-      mockChannelsDaoGet.mockReturnValueOnce(Promise.resolve(null));
+    it('should return 404 when service not found', async () => {
+      mockServicesDaoGet.mockReturnValueOnce(Promise.resolve(null));
       await request(app)
-        .get(`/api/${Environment.getApiVersion()}/channels/${mockChannelDm1.id}`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .expect(HttpStatusCode.NotFound);
-    });
-  });
-
-  describe('Get all user channels', () => {
-    it('should successfully get all channels', async () => {
-      const response = await request(app)
-        .get(`/api/${Environment.getApiVersion()}/channels`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .expect(HttpStatusCode.Ok);
-      expect(response).toHaveProperty('text');
-      const body = JSON.parse(response.text);
-      expect(body).toHaveProperty('data');
-      expect(body.data).toEqual([mockChannelDm1]);
-    });
-
-    it('should return empty', async () => {
-      mockChannelsDaoGetUserChannels.mockResolvedValueOnce([]);
-
-      const response = await request(app)
-        .get(`/api/${Environment.getApiVersion()}/channels`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .expect(HttpStatusCode.Ok);
-      expect(response).toHaveProperty('text');
-      const body = JSON.parse(response.text);
-      expect(body).toHaveProperty('data');
-      expect(body.data).toEqual([]);
-    });
-  });
-
-  describe('Create group', () => {
-    it('should successfully update channel', async () => {
-      const response = await request(app)
-        .post(`/api/${Environment.getApiVersion()}/channels/group`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateServicePayload)
-        .expect(HttpStatusCode.Ok);
-      expect(response).toHaveProperty('text');
-      const body = JSON.parse(response.text);
-      expect(body).toHaveProperty('data');
-      expect(body.data).toEqual(mockChannelGroup);
-      expect(mockUsersServiceGet).toHaveBeenCalled();
-      expect(mockChannelsDaoCreateChannel).toHaveBeenCalled();
-    });
-
-    it('should fail to create group when user id is invalid', async () => {
-      mockUsersServiceGet.mockResolvedValueOnce(null);
-
-      const response = await request(app)
-        .post(`/api/${Environment.getApiVersion()}/channels/group`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateServicePayload)
-        .expect(HttpStatusCode.BadRequest);
-      expect(response).toHaveProperty('text');
-      expect(mockUsersServiceGet).toHaveBeenCalled();
-      expect(mockChannelsDaoCreateChannel).not.toHaveBeenCalled();
-    });
-
-    it('should fail to create channel group if error happen on channels.dao', async () => {
-      mockChannelsDaoCreateChannel.mockRejectedValueOnce(Error);
-
-      await request(app)
-        .post(`/api/${Environment.getApiVersion()}/channels/group`)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .send(mockCreateServicePayload)
-        .expect(HttpStatusCode.InternalServerError);
-      expect(mockUsersServiceGet).toHaveBeenCalled();
-      expect(mockChannelsDaoCreateChannel).toHaveBeenCalled();
-    });
-  });
-
-  describe('Update group', () => {
-    it('should successfully update channel', async () => {
-      const response = await request(app)
-        .patch(`/api/${Environment.getApiVersion()}/channels/group/${mockChannelGroup.id}`)
-        .send(mockUpdateServicePayload)
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .expect(HttpStatusCode.Ok);
-      expect(response).toHaveProperty('text');
-      const body = JSON.parse(response.text);
-      expect(body).toHaveProperty('data');
-      expect(body.data).toEqual(mockChannelDm1);
-    });
-
-    it('should successfully update channel when only some of the field is provided', async () => {
-      const response = await request(app)
-        .patch(`/api/${Environment.getApiVersion()}/channels/group/${mockChannelGroup.id}`)
-        .send({
-          name: 'new-name'
-        })
-        .set({ Authorization: 'Bearer fake-access-token' })
-        .expect(HttpStatusCode.Ok);
-      expect(response).toHaveProperty('text');
-      const body = JSON.parse(response.text);
-      expect(body).toHaveProperty('data');
-      expect(body.data).toEqual(mockChannelDm1);
-    });
-
-    it('should fail update channel when channel not found', async () => {
-      mockChannelsDaoUpdate.mockResolvedValueOnce(null);
-
-      await request(app)
-        .patch(`/api/${Environment.getApiVersion()}/channels/group/${mockChannelDm1.id}`)
-        .send(mockUpdateServicePayload)
+        .get(`/api/${Environment.getApiVersion()}/services/${mockServiceData.id}`)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.NotFound);
     });
   });
 
   describe('delete', () => {
-    it('should successfully delete a channel', async () => {
+    it('should successfully delete a service', async () => {
       const response = await request(app)
-        .delete(`/api/${Environment.getApiVersion()}/channels/${mockChannelDm1.id}`)
+        .delete(`/api/${Environment.getApiVersion()}/services/${mockServiceData.id}`)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.Ok);
       expect(response).toHaveProperty('text');
       const body = JSON.parse(response.text);
       expect(body).toHaveProperty('data');
-      expect(body.data).toEqual(mockChannelDm1.id);
+      expect(body.data).toEqual(mockServiceData);
     });
 
     it('should throw an error when data access object throw an error', async () => {
-      mockChannelsDaoDelete.mockRejectedValueOnce(new RestApiException('internal server error', 500));
+      mockServicesDaoDelete.mockRejectedValueOnce(new RestApiException('internal server error', 500));
       await request(app)
-        .delete(`/api/${Environment.getApiVersion()}/channels/${mockChannelDm1.id}`)
+        .delete(`/api/${Environment.getApiVersion()}/services/${mockServiceData.id}`)
         .set({ Authorization: 'Bearer fake-access-token' })
         .expect(HttpStatusCode.InternalServerError);
     });

@@ -9,10 +9,12 @@ export function useFetchProtectedMainAPI<T>(endpoint: IAPIEndpoint, body?: any):
 
   useEffect(() => {
     fetchData();
-  }, [endpoint]);
+  }, [endpoint.url, endpoint.method, endpoint.headers, body]);
 
-  const fetchData = useCallback((): void => {
-    setLoading(true);
+  const fetchData = useCallback((setLoadingState = true): void => {
+    if (setLoadingState) {
+      setLoading(true);
+    }
     setError(null);
 
     callProtectedMainAPI<T>(endpoint, body)

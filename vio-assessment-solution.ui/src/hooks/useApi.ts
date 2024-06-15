@@ -5,7 +5,7 @@ export interface IUseApiResponse<T> {
   data: T | null;
   loading: boolean;
   error: any;
-  refetch: () => void;
+  refetch: (setLoadingState: boolean) => void;
 }
 
 export function useAPI<T>(endpoint: IAPIEndpoint, body?: any): IUseApiResponse<T> {

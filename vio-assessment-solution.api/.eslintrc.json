@@ -135,9 +135,7 @@
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/no-empty-function": "error",
-    "@typescript-eslint/no-explicit-any": [
-      "off"
-    ],
+    "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": "error",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-use-before-define": "error",
@@ -162,7 +160,7 @@
         },
         "singleline": {
           "delimiter": "comma",
-          "requireLast": true
+          "requireLast": false
         },
         "overrides": {
           "interface": {

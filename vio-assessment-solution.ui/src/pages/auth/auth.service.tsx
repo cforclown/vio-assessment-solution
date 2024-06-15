@@ -1,25 +1,5 @@
 import { ILoginReq, IRegisterUserReq, IUserContext } from 'vio-assessment-solution.contracts';
 import { callMainAPI, getAuthEndpoint } from '@/utils/call-api';
-import { IMetadataField } from '@/utils/metadata';
-
-export const signinFields: IMetadataField<any>[] = [
-  {
-    accessorKey: 'email',
-    label: 'Email',
-    type: {
-      value: 'STRING',
-      required: true
-    }
-  },
-  {
-    accessorKey: 'password',
-    label: 'Password',
-    type: {
-      value: 'STRING',
-      required: true
-    }
-  }
-];
 
 export const signin = (credentials: ILoginReq): Promise<IUserContext> => callMainAPI(
   getAuthEndpoint('/login', 'POST'),

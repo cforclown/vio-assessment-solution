@@ -22,7 +22,8 @@ export interface IMetadataFieldType {
    * only visible on create (disabled)
    * see the usage on Users.tsx
    *
-   * 'hide' => the field will not be visible on create or edit. this value should be applied to 'id' field that generated on item creation (on backend side)
+   * 'hide' => the field will not be visible on create or edit. 
+   * this value should be applied to 'id' or fields that generated on item creation (on backend side) or can only be changed on backend side
    */
   noneditable?: 'static' | 'hide' | boolean;
 

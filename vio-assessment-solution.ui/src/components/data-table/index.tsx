@@ -49,7 +49,13 @@ function DataTable<T>({
   onFilterChange,
   actionColumn
 }: IDataTableProps<T>) {
-  const columns = useMemo(() => [...cols, actionColumn] as IMetadataField<T>[], [ cols, actionColumn]) ;
+  const columns = useMemo(() => {
+    if (!actionColumn) {
+      return [...cols] as IMetadataField<T>[];
+    }
+
+    return [...cols, actionColumn] as IMetadataField<T>[];
+  }, [ cols, actionColumn]) ;
 
   // PAGINATION VARIABLES (client pagination)-----------------------------------------------------
   const [clientPagination, setPagination] = useState<PaginationState>({
@@ -153,7 +159,7 @@ function DataTable<T>({
           />
         </div>
       </div>
-      <div className="rounded-md border">
+      <div className="w-full rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

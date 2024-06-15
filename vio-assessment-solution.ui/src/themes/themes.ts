@@ -54,7 +54,7 @@ export const primaryTheme: ITheme = {
     itemBg: '#222f3e',
     itemTextColor: '#ffffff',
     itemActiveTextColor: '#ffffff',
-    itemActiveBg: '#636e72',
+    itemActiveBg: '#f53b57',
   },
   header: {
     bg: '#f53b57',

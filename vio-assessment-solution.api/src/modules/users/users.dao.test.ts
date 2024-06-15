@@ -1,11 +1,11 @@
 import { model, Types } from 'mongoose';
 import { hashPassword } from 'cexpress-utils/lib';
-import { IUser, UsersDao, usersSchema } from '.';
+import { IUserDoc, UsersDao, usersSchema } from '.';
 import { docToJSON, expectDocumentToEqual, mockCreateUserPayload, MockDB } from '../../test';
 
 describe('users-dao', () => {
   const db = new MockDB();
-  model<IUser>(UsersDao.MODEL_NAME, usersSchema);
+  model<IUserDoc>(UsersDao.MODEL_NAME, usersSchema);
 
   const usersDao = new UsersDao();
 
@@ -82,7 +82,7 @@ describe('users-dao', () => {
     expect(deleteResult?.toString()).toEqual(doc.id);
 
     getResult = await usersDao.get(doc.id);
-    expect(getResult).toEqual(null);
+    expect(getResult).toBeFalsy();
   });
 
   it('create -> get -> delete (fail) -> get (still exist)', async () => {
